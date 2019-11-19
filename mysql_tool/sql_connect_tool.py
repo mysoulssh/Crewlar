@@ -20,5 +20,14 @@ class SqlTool:
         )
         return mydb
 
+    def connect_sql_db(self, db_name):
+        db = mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            passwd=self.password,
+            database=db_name
+        )
+        return db
+
 
 DBTool = SqlTool
