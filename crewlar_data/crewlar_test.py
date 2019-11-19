@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from mysql_tool import DBTool
 
 headers = {
     "User-Agent": UserAgent(path='./fake_useragent.json').random,
@@ -34,4 +35,6 @@ def request_url(url_string):
 
 if __name__ == '__main__':
     print("Hello python")
-    request_url("https://search.51job.com/list/090200,000000,0000,00,9,99,%2B,2,1.html?lang=c&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&ord_field=0&dibiaoid=0&line=&welfare=")
+    db = DBTool(host="localhost", user="root", password="Qwe123456")
+    print(db.host, db.user, db.password)
+    # request_url("https://search.51job.com/list/090200,000000,0000,00,9,99,%2B,2,1.html?lang=c&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&ord_field=0&dibiaoid=0&line=&welfare=")
