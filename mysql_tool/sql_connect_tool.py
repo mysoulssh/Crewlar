@@ -44,7 +44,7 @@ class SqlTool:
             host=self.host,
             user=self.user,
             passwd=self.password,
-            database=db_name
+            database=db_name,
         )
         return db
 
