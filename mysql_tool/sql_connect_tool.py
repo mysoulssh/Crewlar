@@ -1,5 +1,24 @@
 import mysql.connector
-import sys
+
+
+def is_db_exist(cursor, db_name):
+    is_exist = False
+    for temp_db in cursor:
+        if len(temp_db):
+            if db_name in temp_db[0]:
+                is_exist = True
+                break
+    return is_exist
+
+
+def is_table_exist(cursor, table_name):
+    is_exist = False
+    for temp_table in cursor:
+        if len(temp_table):
+            if table_name in temp_table[0]:
+                is_exist = True
+                break
+    return is_exist
 
 
 class SqlTool:
