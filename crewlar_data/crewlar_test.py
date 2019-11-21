@@ -55,15 +55,14 @@ def request_url(url_string, cursor, db):
 
             sql = "INSERT INTO {0} (company, job, location, wages, pu_time, local_code) VALUES (%s, %s, %s, %s, %s, %s)".format("works")
             if len(money):
-                # val = (company[0].text, job, location[0].text, money[0].text, time[0].text, "090200")
-                val = ("28282", "6", "6", "4", "5", "6")
+                val = (company[0].text, job, location[0].text, money[0].text, time[0].text, "090200")
                 cursor.execute(sql, val)
                 db.commit()
             else:
                 val = (company[0].text, job, location[0].text, "面议", time[0].text, "090200")
                 cursor.execute(sql, val)
                 db.commit()
-            break
+            # break
 
     print("完成")
 
@@ -84,17 +83,9 @@ def connect_db(db_tool, db_name):
         # crewlar_db_cursor.execute(sql)
 
         request_url(url_string, crewlar_db_cursor, crewlar_db)
-
-        # sql = "INSERT INTO {0} (company, job, location, wages, pu_time, local_code) VALUES (%s, %s, %s, %s, %s, %s)".format("works")
-        # val = ("1", "2", "3", "4", "5", "6")
-        # crewlar_db_cursor.execute(sql, val)
-        # crewlar_db.commit()
-        # print("加入记录:", crewlar_db_cursor.lastrowid)
-
-
     else:
         crewlar_db_cursor.execute("CREATE TABLE {0} (id INT AUTO_INCREMENT PRIMARY KEY, company TEXT, job TEXT, location TEXT, wages TEXT, "
-                                  "pu_time TEXT, local_code TEXT)".format(table_name))
+                                  "pu_time TEXT, local_code TEXT) CHARSET utf8".format(table_name))
         crewlar_db_cursor.execute("SHOW TABLES")
         if is_table_exist(crewlar_db_cursor, table_name):
             print("创建表{}成功".format(table_name))
@@ -116,7 +107,7 @@ if __name__ == '__main__':
         print("存在数据库", db_string)
         connect_db(db, db_string)
     else:
-        cursor.execute("CREATE DATABASE {0}".format(db_string))
+        cursor.execute("CREATE DATABASE {0} CHARSET utf8".format(db_string))
         cursor.execute("SHOW DATABASES")
         if is_db_exist(cursor, db_string):
             print("创建数据库{0}成功".format(db_string))
