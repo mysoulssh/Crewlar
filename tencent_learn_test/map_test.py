@@ -6,27 +6,44 @@ from mysql_tool import is_db_exist, is_table_exist
 def connect_db(db_tool, db_name, table_name):
     db = db_tool.connect_sql_db(db_name)
     cursor = db.cursor()
-    cursor.execute("create table if not exists {0} (id INT AUTO_INCREMENT PRIMARY KEY, location_id TEXT, location_name TEXT, p_id TEXT, p_name TEXT, it_id TEXT, it_name TEXT) charset utf8".format(
-        table_name))
+    # cursor.execute("create table if not exists {0} (id INT AUTO_INCREMENT PRIMARY KEY, location_id TEXT, location_name TEXT, p_id TEXT, p_name TEXT, it_id TEXT, it_name TEXT) charset utf8".format(
+    #     table_name))
+    # cursor.execute("create table if not exists {0} (id INT AUTO_INCREMENT PRIMARY KEY, location_id TEXT, detail_location_id TEXT)".format(table_name))
+    cursor.execute("create table if not exists {0} (id INT AUTO_INCREMENT PRIMARY KEY, job_id TEXT, job_name TEXT)".format(table_name))
 
-    cursor.execute("select * from "+table_name+" where location_name = '成都'")
-    result = cursor.fetchall()
-
-    for x in result:
-        print(x)
-
-    # areaInfo = area_info.AreaInfo()
-    # localDic = areaInfo.area
-    # localtions = []
-    # for k, v in localDic.items():
-    #     localtions.append((k, v))
+    # cursor.execute("select * from "+table_name+" where location_name = '成都'")
+    # result = cursor.fetchall()
     #
-    # if len(localtions):
-    #     print(localtions)
-    #     sql = "insert into {0} (location_id, location_name) values (%s, %s)".format(table_name)
-    #     cursor.executemany(sql, localtions)
-    #     db.commit()
-    #     print("插入数据成功")
+    # for x in result:
+    #     print(x)
+
+    localtions = []
+    areaInfo = area_info.AreaInfo()
+    # local_detail_dict = areaInfo.area_detail
+    # for k, v in local_detail_dict.items():
+    #     localtions.append((k, v))
+
+    # localDic = areaInfo.area
+    # for k, v in localDic.items():
+        # localtions.append((k, v))
+
+    # detail_jobs = areaInfo.jobs
+    # for k,v in detail_jobs.items():
+    #     localtions.append((k, v))
+
+    jobs_ft = areaInfo.ft
+    for k,v in jobs_ft.items():
+        localtions.append((k, v))
+
+    if len(localtions):
+        print(localtions)
+        # sql = 'insert into {0} (location_id, detail_location_id) values (%s, %s)'.format(table_name)
+        # sql = "insert into {0} (location_id, location_name) values (%s, %s)".format(table_name)
+        # sql = 'insert into {0} (job_id, detail_job_id) values (%s, %s)'.format(table_name)
+        sql = 'insert into {0} (job_id, job_name) values (%s, %s)'.format(table_name)
+        cursor.executemany(sql, localtions)
+        db.commit()
+        # print("插入数据成功")
 
 
 if __name__ == '__main__':
@@ -60,7 +77,7 @@ if __name__ == '__main__':
     cursor = mydbtool.cursor()
 
     db_string = "crewlar_db"
-    db_table_string = "work_infos"
+    db_table_string = "jobs"
 
     cursor.execute("SHOW DATABASES")
     exist_db = is_db_exist(cursor, db_string)
